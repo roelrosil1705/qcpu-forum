@@ -20,6 +20,7 @@ class get_model extends CI_Model {
     }
 
     function get_forum_thread($content_id){
+        $this->db->order_by('date_created','DESC');
         $query = $this->db->get_where( 'forum-threads', array( 'content_id' => $content_id ) );
         return json_encode($query->result_array());
     }
@@ -68,6 +69,7 @@ class get_model extends CI_Model {
 
     function get_inner_thread( $thread_id ){
         $discussion_array = array();
+        $views = 0;
 
         $query = $this->db->get_where( 'forum-threads', array( 'thread_id' => $thread_id) );
         foreach ($query->result() as $row)
@@ -84,8 +86,31 @@ class get_model extends CI_Model {
 
             $discussion_array['mes'] = $row->message;
             $discussion_array['dc'] = $row->date_created;
+
+            $views = $row->views + 1;
+
+            $data_update = array(
+                'views'   => $views
+            );
+            $this->db->where( 'thread_id', $row->thread_id );
+            $this->db->update( 'forum-threads', $data_update );
         }
 
         return json_encode( $discussion_array );
     }
+
+    function thread_replies( $reply_id ){
+        $reply_arr = array();
+
+        $query = $this->db->get_where( 'forum-replies', array( 'reply_id' => $reply_id ) );
+        foreach ($query->result() as $row)
+        {
+            $reply_arr['fn']  = $this->get_admin($row->account_no);
+            $reply_arr['mes'] = $row->message;
+            $reply_arr['dc']  = $row->date_created;
+        }
+
+        return json_encode( $reply_arr );
+    }
+
 }

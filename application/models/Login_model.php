@@ -11,10 +11,11 @@ class login_model extends CI_Model {
 
                 $this->session->set_userdata(array(
                     'stud_id'       => $user['stud_id'],
-                    'account_no'       => $user['account_no'],
+                    'account_no'    => $user['account_no'],
                     'lastname'      => $user['lastname'],
                     'firstname'     => $user['firstname'],
                     'middlename'    => $user['middlename'],
+                    'account_type'  => $user['account_type'],
                     'status'        => TRUE
                 ));
 
@@ -71,6 +72,7 @@ class login_model extends CI_Model {
                     'admin_id'      => $admin['admin_id'],
                     'user'          => $admin['user'],
                     'pass'          => $admin['pass'],
+                    'account_type'  => $admin['account_type'],
                     'admin_name'    => $admin['admin_name'],
                     'status'        => TRUE
                 ));

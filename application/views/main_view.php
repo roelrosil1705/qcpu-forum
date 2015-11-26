@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="<?=base_url('assets/css/constants.css');?>">
     <link rel="stylesheet" href="<?=base_url('assets/css/style.css');?>">
 
+    <script>
+        var MyNameSpace = {
+            config: {
+                base_url: "<?php echo base_url(); ?>"
+            }
+        }
+    </script>
+
     <script type="text/javascript" src="<?= base_url('assets/js/jquery-1.11.3.min.js');?>"></script>
     <script src="<?=base_url('assets/js/vendor/modernizr.js');?>"></script>
 </head>
@@ -36,6 +44,11 @@
 
     <script src="<?=base_url('assets/js/vendor/jquery.js');?>"></script>
     <script src="<?=base_url('assets/js/foundation.min.js');?>"></script>
+    <script src="<?=base_url('assets/js/foundation/foundation.offcanvas.js');?>"></script>
+    <script src="<?=base_url('assets/js/jquery.form.js');?>"></script>
+    <script src="<?=base_url('assets/js/jquery-ui.min.js');?>"></script>
+    <script src="<?=base_url('assets/js/cf77f9273ab747e14102a80d1d5b6d51.js');?>"></script>
+    <script src="<?=base_url('assets/js/704f63fb0c058ffdcd5c49e556ed9739.js');?>"></script>
     <script>
         $(document).foundation();
     </script>

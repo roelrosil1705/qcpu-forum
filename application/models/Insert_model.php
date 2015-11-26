@@ -76,4 +76,84 @@ class insert_model extends CI_Model {
         return $insid;
     }
 
+    function add_threads_forum_v($inp_content,$sel_sticky,$inp_thread,$ta_thread){
+        $insid = 0;
+
+        if( $this->session->userdata('account_type') == 'admin' ){
+            $aid = $this->session->userdata('account_no');
+            $studid = 0;
+        }else{
+            $aid = 0;
+            $studid = $this->session->userdata('account_no');
+        }
+
+        $data = array(
+            'content_id'        => $inp_content,
+            'stud_id'           => $studid,
+            'admin_id'          => $aid,
+            'sticky'            => 1,
+            'thread'            => $inp_thread,
+            'message'           => $ta_thread,
+            'last_post'         => date("m-d-Y  H:i:s").' by '.$this->session->userdata('firstname').' '.$this->session->userdata('lastname'),
+            'views'             => '1',
+            'date_created'      => date("m-d-Y H:i:s")
+        );
+
+        $this->db->insert('forum-threads', $data);
+
+        $insid = $this->db->insert_id();
+
+        if( $this->db->affected_rows() > 0 ){
+
+            $query = $this->db->get_where('forum-threads', array( 'content_id' => $inp_content ));
+            $num = $query->num_rows();
+
+            $data_update = array(
+                'threads'   => $num,
+                'last_post' => date("m-d-Y  H:i:s").' by '.$this->session->userdata('firstname').' '.$this->session->userdata('lastname')
+            );
+            $this->db->where( 'content_id', $inp_content );
+            $this->db->update( 'forum-contents', $data_update );
+
+        }
+
+        return $insid;
+    }
+
+    function insert_replies($a){
+        $rep = 0;
+        $insid = 0;
+
+        $data = array(
+            'thread_id'         => $a['thd'],
+            'account_no'        => $this->session->userdata('account_no'),
+            'message'           => $a['ta_reply'],
+            'date_created'      => date("m-d-Y H:i:s")
+        );
+
+        $this->db->insert('forum-replies', $data);
+
+        $insid = $this->db->insert_id();
+
+        if( $this->db->affected_rows() > 0 ){
+
+            $query = $this->db->get_where('forum-threads', array( 'thread_id' => $a['thd'] ));
+            $row = $query->row();
+            if (isset($row))
+            {
+                $row->content_id;
+                $rep = $row->no_of_replies + 1;
+            }
+
+            $data_update = array(
+                'no_of_replies'   => $rep
+            );
+            $this->db->where( 'thread_id', $a['thd'] );
+            $this->db->update( 'forum-threads', $data_update );
+
+        }
+
+        return $insid;
+    }
+
 }

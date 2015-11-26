@@ -85,7 +85,7 @@ $('#form_threads').ajaxForm({
             $('#btn_add_threads').prop('disabled', false);
             return false;
         }else{
-            $('#special-character').hide();
+            $('#special-character-threads').hide();
         }
     },
     success:  function(response){
@@ -97,6 +97,64 @@ $('#form_threads').ajaxForm({
         $('#btn_add_threads').prop('disabled', false);
         reload_thread_selector();
         $("<tr><td>" + json.thread + "</td><td>" + json.last_post + "</td><td>0</td><td>" + json.views + "</td></tr>").prependTo("#table-threads > tbody"); //update replies
+    }
+});
+
+$('#form_threads_v').ajaxForm({
+    type: 'POST',
+    url: MyNameSpace.config.base_url+'main/add_threads',
+    beforeSubmit: function(arr, jform, option){
+        $('#btn_add_threads-v').prop('disabled', true);
+        //alert($('#sel_threads_discussion').val());
+
+        if($('#sel_threads_discussion').val() == 0){
+            $('#special-character-threads-v').text();
+            $('#special-character-threads-v').text("You haven't selected a discussion!.");
+            $('#special-character-threads-v').show();
+            $('#btn_add_threads').prop('disabled', false);
+            return false;
+        }else if( $("#inp_thread").val() == '' || $("#ta_thread").val() == '' ){
+            $('#special-character-threads-v').text();
+            $('#special-character-threads-v').text("You haven't inputted a message!.");
+            $('#special-character-threads-v').show();
+            $('#btn_add_threads').prop('disabled', false);
+            return false;
+        }else{
+            $('#special-character-threads-v').hide();
+        }
+    },
+    success:  function(response){
+        var rep1 = response.replace("[","");
+        var rep2 = rep1.replace("]","");
+        var json = $.parseJSON(rep2);
+        $('#inp_thread').val('');
+        $('#ta_thread').val('');
+        $("<tr><td><a href='" + MyNameSpace.config.base_url + "main/gtt?b=" + json.thread_id + "'>" + json.thread + "</a></td><td>" + json.last_post + "</td><td>0</td><td>" + json.views + "</td></tr>").prependTo("#table-threads > tbody"); //update replies
+        $('#btn_add_threads').prop('disabled', false);
+    }
+});
+$('#reply_form').ajaxForm({
+    type: 'POST',
+    url: MyNameSpace.config.base_url+'main/add_reply',
+    beforeSubmit: function(arr, jform, option){
+        $('#btn_reply').prop('disabled', true);
+        if( $("#ta_reply").val() == '' ){
+            $('#special-character-threads-v').show();
+            $('#btn_reply').prop('disabled', false);
+            return false;
+        }else{
+            $('#special-character-threads-v').hide();
+        }
+    },
+    success:  function(response){;
+        var rep1 = response.replace("[","");
+        var rep2 = rep1.replace("]","");
+        var json = $.parseJSON(rep2);
+        console.log(json)
+        $('#ta_reply').val('');
+
+        $("<tr><td>" + json.fn + "</td><td>"+ json.mes +"</td><td>" + json.dc + "</td></tr>").prependTo("#table-replies > tbody"); //update replies
+        $('#btn_reply').prop('disabled', false);
     }
 });
 
