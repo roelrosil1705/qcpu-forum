@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2015 at 10:24 AM
+-- Generation Time: Nov 25, 2015 at 10:41 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `isisqcpu`
+-- Database: `isisqcpu-forum`
 --
 
 -- --------------------------------------------------------
@@ -61,6 +61,50 @@ CREATE TABLE IF NOT EXISTS `accounting` (
 INSERT INTO `accounting` (`id`, `stud_num`, `payment`, `date_payment`) VALUES
 (1, '12-2351', '2758.00', '12-23-14'),
 (2, '12-2351', '2200.70', '8-16-14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts`
+--
+
+CREATE TABLE IF NOT EXISTS `accounts` (
+  `stud_id` int(11) NOT NULL,
+  `account_no` varchar(50) NOT NULL,
+  `account_type` text NOT NULL,
+  `password` text NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `middlename` varchar(50) DEFAULT NULL,
+  `birthdate` varchar(50) NOT NULL,
+  `gender` varchar(50) NOT NULL,
+  `street` varchar(50) NOT NULL,
+  `brgy` text NOT NULL,
+  `province` text NOT NULL,
+  `phone_number` text,
+  `religion` varchar(50) NOT NULL,
+  `mother_name` varchar(50) DEFAULT NULL,
+  `mother_occupation` varchar(50) DEFAULT NULL,
+  `mother_education` varchar(50) DEFAULT NULL,
+  `father_name` varchar(50) DEFAULT NULL,
+  `father_occupation` varchar(50) DEFAULT NULL,
+  `father_education` varchar(50) DEFAULT NULL,
+  `primary_education` varchar(50) NOT NULL,
+  `year_graduated` varchar(50) DEFAULT NULL,
+  `primary_honors` varchar(50) DEFAULT NULL,
+  `secondary_education` varchar(50) NOT NULL,
+  `year_graduatedsec` varchar(50) DEFAULT NULL,
+  `secondary_honors` varchar(50) DEFAULT NULL,
+  `date_registered` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`stud_id`, `account_no`, `account_type`, `password`, `lastname`, `firstname`, `middlename`, `birthdate`, `gender`, `street`, `brgy`, `province`, `phone_number`, `religion`, `mother_name`, `mother_occupation`, `mother_education`, `father_name`, `father_occupation`, `father_education`, `primary_education`, `year_graduated`, `primary_honors`, `secondary_education`, `year_graduatedsec`, `secondary_honors`, `date_registered`) VALUES
+(1, '12-2351', 'student', '638190bf025179ecebcc1b3d019a0230', 'Garma', 'Erwin', 'Bernal', 'Monday, July 05, 1993', 'Male', '615 Int C', 'BagBag', 'Novaliches, Quezon City', '09194958585', 'Catholic', 'Brenda Garma', 'OFW', 'College Graduate', 'Edgar Garma', 'Soldier', 'College Graduate', 'Dingras FaithAcademy, Inc', '2004', 'none', 'DNHS', '2008', 'none', '0000-00-00 00:00:00'),
+(2, '45-6513', 'admin', '7371713832ca5a0bb0e2a6f676869246', 'Roel', 'Rosil', 'Nanar', 'April 5, 1991', 'Male', '2 Martirez St', 'Gulod', 'Novaliches, Quezon CIty', '09464187000', 'Roman Catholic', 'Letty Rosil', 'House Wife', 'Cosmetology', 'Rogelio Rosil', 'OFW', 'Machinery', 'Software Developement', '2014', 'Sumusumakumlaude', 'Hardware Developement', '2014', 'Kumukumlaude', '2015-11-24 22:22:00');
 
 -- --------------------------------------------------------
 
@@ -112,12 +156,22 @@ INSERT INTO `forum-admin` (`admin_id`, `user`, `pass`, `admin_name`) VALUES
 CREATE TABLE IF NOT EXISTS `forum-contents` (
   `content_id` int(11) NOT NULL,
   `discussion_id` int(11) NOT NULL,
-  `admin_id` int(11) NOT NULL,
+  `admin_id` text NOT NULL,
   `content_title` text NOT NULL,
   `last_post` text,
   `threads` int(11) NOT NULL,
-  `posts` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `posts` int(11) NOT NULL,
+  `date_created` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `forum-contents`
+--
+
+INSERT INTO `forum-contents` (`content_id`, `discussion_id`, `admin_id`, `content_title`, `last_post`, `threads`, `posts`, `date_created`) VALUES
+(1, 2, '45-6513', 'I declare food bonanza', '', 0, 0, '11-24-2015 15:58:41'),
+(2, 1, '45-6513', 'Gallery', '11-25-2015  09:09:49 by Rosil Roel', 2, 0, '11-24-2015 16:00:49'),
+(3, 3, '45-6513', 'Like this page', '', 0, 0, '11-24-2015 16:01:03');
 
 -- --------------------------------------------------------
 
@@ -128,9 +182,19 @@ CREATE TABLE IF NOT EXISTS `forum-contents` (
 CREATE TABLE IF NOT EXISTS `forum-discussion` (
   `discussion_id` int(11) NOT NULL,
   `date_created` text NOT NULL,
-  `admin_id` int(11) NOT NULL,
+  `admin_id` text NOT NULL,
   `discussion_name` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `forum-discussion`
+--
+
+INSERT INTO `forum-discussion` (`discussion_id`, `date_created`, `admin_id`, `discussion_name`) VALUES
+(1, '11-24-2015  15:51:43', '45-6513', 'Home'),
+(2, '11-24-2015  15:52:15', '45-6513', 'Announcements'),
+(3, '11-24-2015  15:58:05', '45-6513', 'Comments'),
+(4, '11-24-2015  16:00:27', '45-6513', 'Suggestions');
 
 -- --------------------------------------------------------
 
@@ -141,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `forum-discussion` (
 CREATE TABLE IF NOT EXISTS `forum-replies` (
   `reply_id` int(11) NOT NULL,
   `thread_id` int(11) NOT NULL,
-  `stud_id` int(11) NOT NULL,
+  `stud_id` text NOT NULL,
   `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -154,13 +218,23 @@ CREATE TABLE IF NOT EXISTS `forum-replies` (
 CREATE TABLE IF NOT EXISTS `forum-threads` (
   `thread_id` int(11) NOT NULL,
   `content_id` int(11) NOT NULL,
-  `stud_id` int(11) NOT NULL,
-  `admin_id` int(11) NOT NULL,
+  `stud_id` text,
+  `admin_id` text,
   `sticky` int(11) NOT NULL,
-  `thread` int(11) NOT NULL,
-  `last_post` int(11) NOT NULL,
-  `views` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `thread` text NOT NULL,
+  `message` text NOT NULL,
+  `last_post` text,
+  `views` int(11) NOT NULL,
+  `date_created` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `forum-threads`
+--
+
+INSERT INTO `forum-threads` (`thread_id`, `content_id`, `stud_id`, `admin_id`, `sticky`, `thread`, `message`, `last_post`, `views`, `date_created`) VALUES
+(1, 2, '0', '45-6513', 1, 'Sala Set', 'message', '11-24-2015  16:01:46 by Rosil Roel', 1, '11-24-2015 16:01:46'),
+(2, 2, '0', '45-6513', 1, 'Class', '1234', '11-25-2015  09:09:49 by Rosil Roel', 1, '11-25-2015 09:09:49');
 
 -- --------------------------------------------------------
 
@@ -244,44 +318,6 @@ INSERT INTO `sections` (`section_id`, `section`, `year_level`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stud_info`
---
-
-CREATE TABLE IF NOT EXISTS `stud_info` (
-  `stud_id` int(11) NOT NULL,
-  `stud_no` varchar(50) NOT NULL,
-  `password` text NOT NULL,
-  `lastname` varchar(50) NOT NULL,
-  `firstname` varchar(50) NOT NULL,
-  `middlename` varchar(50) DEFAULT NULL,
-  `birthdate` varchar(50) NOT NULL,
-  `gender` varchar(50) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `religion` varchar(50) NOT NULL,
-  `mother_name` varchar(50) DEFAULT NULL,
-  `mother_occupation` varchar(50) DEFAULT NULL,
-  `mother_education` varchar(50) DEFAULT NULL,
-  `father_name` varchar(50) DEFAULT NULL,
-  `father_occupation` varchar(50) DEFAULT NULL,
-  `father_education` varchar(50) DEFAULT NULL,
-  `primary_education` varchar(50) NOT NULL,
-  `year_graduated` varchar(50) DEFAULT NULL,
-  `primary_honors` varchar(50) DEFAULT NULL,
-  `secondary_education` varchar(50) NOT NULL,
-  `year_graduatedsec` varchar(50) DEFAULT NULL,
-  `secondary_honors` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `stud_info`
---
-
-INSERT INTO `stud_info` (`stud_id`, `stud_no`, `password`, `lastname`, `firstname`, `middlename`, `birthdate`, `gender`, `address`, `religion`, `mother_name`, `mother_occupation`, `mother_education`, `father_name`, `father_occupation`, `father_education`, `primary_education`, `year_graduated`, `primary_honors`, `secondary_education`, `year_graduatedsec`, `secondary_honors`) VALUES
-(1, '12-2351', '638190bf025179ecebcc1b3d019a0230', 'Garma', 'Erwin', 'Bernal', 'Monday, July 05, 1993', 'Male', '615 Int C, BagBag Novaliches, Quezon City', 'Catholic', 'Brenda Garma', 'OFW', 'College Graduate', 'Edgar Garma', 'Soldier', 'College Graduate', 'Dingras FaithAcademy, Inc', '2004', 'none', 'DNHS', '2008', 'none');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `subject`
 --
 
@@ -315,6 +351,12 @@ ALTER TABLE `accessaccounts`
 --
 ALTER TABLE `accounting`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `accounts`
+--
+ALTER TABLE `accounts`
+  ADD PRIMARY KEY (`stud_id`);
 
 --
 -- Indexes for table `announcement`
@@ -377,12 +419,6 @@ ALTER TABLE `sections`
   ADD PRIMARY KEY (`section_id`);
 
 --
--- Indexes for table `stud_info`
---
-ALTER TABLE `stud_info`
-  ADD PRIMARY KEY (`stud_id`);
-
---
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
@@ -403,6 +439,11 @@ ALTER TABLE `accessaccounts`
 ALTER TABLE `accounting`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `accounts`
+--
+ALTER TABLE `accounts`
+  MODIFY `stud_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `announcement`
 --
 ALTER TABLE `announcement`
@@ -416,12 +457,12 @@ ALTER TABLE `forum-admin`
 -- AUTO_INCREMENT for table `forum-contents`
 --
 ALTER TABLE `forum-contents`
-  MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `forum-discussion`
 --
 ALTER TABLE `forum-discussion`
-  MODIFY `discussion_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `discussion_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `forum-replies`
 --
@@ -431,7 +472,7 @@ ALTER TABLE `forum-replies`
 -- AUTO_INCREMENT for table `forum-threads`
 --
 ALTER TABLE `forum-threads`
-  MODIFY `thread_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `thread_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `preenlist`
 --
@@ -452,11 +493,6 @@ ALTER TABLE `schedule`
 --
 ALTER TABLE `sections`
   MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `stud_info`
---
-ALTER TABLE `stud_info`
-  MODIFY `stud_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `subject`
 --

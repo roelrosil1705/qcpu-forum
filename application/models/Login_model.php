@@ -2,7 +2,7 @@
 
 class login_model extends CI_Model {
     function checklogin($uname, $password){
-        $query = $this->db->get_where('stud_info', array('stud_no' => $uname, 'password' => md5($password)));
+        $query = $this->db->get_where('accounts', array('account_no' => $uname, 'password' => md5($password)));
         if ($query->num_rows() > 0)
         {
 
@@ -11,7 +11,7 @@ class login_model extends CI_Model {
 
                 $this->session->set_userdata(array(
                     'stud_id'       => $user['stud_id'],
-                    'stud_no'       => $user['stud_no'],
+                    'account_no'       => $user['account_no'],
                     'lastname'      => $user['lastname'],
                     'firstname'     => $user['firstname'],
                     'middlename'    => $user['middlename'],
@@ -28,7 +28,7 @@ class login_model extends CI_Model {
 
     function adminlogin($uname, $password){
 
-        $query = $this->db->get_where('forum-admin', array('user' => $uname, 'pass' => md5($password)));
+        $query = $this->db->get_where('accounts', array('account_no' => $uname, 'password' => md5($password)));
         if ($query->num_rows() > 0)
         {
 
@@ -36,11 +36,12 @@ class login_model extends CI_Model {
             {
 
                 $this->session->set_userdata(array(
-                    'admin_id'      => $admin['admin_id'],
-                    'user'          => $admin['user'],
-                    'pass'          => $admin['pass'],
-                    'admin_name'    => $admin['admin_name'],
-                    'status'        => TRUE
+                    'session_id_no'         => $admin['account_no'],
+                    'session_lastname'      => $admin['lastname'],
+                    'session_firstname'     => $admin['firstname'],
+                    'session_middlename'    => $admin['middlename'],
+                    'session_account_type'  => $admin['account_type'],
+                    'status'                => TRUE
                 ));
 
             }
@@ -58,7 +59,7 @@ class login_model extends CI_Model {
 
     }
 
-    function fetch_admin(){
+    function fetch_admin($uname,$password){
         $query = $this->db->get_where('forum-admin', array('user' => $uname, 'pass' => md5($password)));
         if ($query->num_rows() > 0)
         {
@@ -83,7 +84,9 @@ class login_model extends CI_Model {
     }
 
     function load_new_threads(){
-        return $this->db->get('forum-threads', 10, 0);
+        $this->db->order_by('date_created','DESC');
+        $query = $this->db->get('forum-threads', 10, 0);
+        return $query;
     }
 
     function load_contents(){

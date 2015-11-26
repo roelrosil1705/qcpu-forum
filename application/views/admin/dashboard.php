@@ -1,5 +1,6 @@
 <?php
 //print_r($this->session->userdata());
+//echo $adname;
 ?>
 
 <div class="column large-12 medium-11 small-10">
@@ -12,13 +13,13 @@
                 <div id="discussionModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
                     <h2 id="modalTitle">Add a discussion</h2>
 
-                    <div id="special-character" data-alert class="alert-box alert radius hide-normal">
+                    <div id="special-character-discussion" data-alert class="alert-box alert radius hide-normal">
                         Special characters are not allowed
                         <a href="#" class="close">&times;</a>
                     </div>
 
                     <form id="form_discussion" action="" method="post">
-                        <input type="text" name="inp_discussion" placeholder="Discussion Name">
+                        <input type="text" id="inp_discussion" name="inp_discussion" placeholder="Discussion Name">
                         <button id="btn_add" type="submit" class="button small right"><i class="fi-plus small"></i> Add</button>
                     </form>
 
@@ -41,13 +42,13 @@
                             {
                                 foreach ($discussion_data->result_array() as $dd)
                                 {
-                                    $query = $this->db->get_where( 'forum-admin', array( 'admin_id' => $dd['admin_id'] ) );
+                                    $query = $this->db->get_where( 'accounts', array( 'account_no' => $dd['admin_id'] ) );
                                     $row = $query->row();
                                     echo '
                                         <tr>
                                             <td>'.$dd['discussion_id'].'</td>
                                             <td>'.$dd['date_created'].'</td>
-                                            <td>'.$row->admin_name.'</td>
+                                            <td>'.$row->firstname.' '.$row->lastname.'</td>
                                             <td>'.$dd['discussion_name'].'</td>
                                         </tr>
                                     ';
@@ -85,7 +86,7 @@
                                 }
                             ?>
                         </select>
-                        <input type="text" name="inp_forum" placeholder="Forum Name">
+                        <input type="text" id="inp_forum" name="inp_forum" placeholder="Forum Name">
                         <button id="btn_add_forum" type="submit" class="button small right"><i class="fi-plus small"></i> Add</button>
                     </form>
 
@@ -144,8 +145,7 @@
                     </div>
 
                     <form id="form_threads" action="" method="post">
-
-                        <select id="sel_threads_discussion" name="sel_threads_discussion" >
+                        <select id="sel_threads_discussion" name="sel_threads_discussion">
                             <option value="0">Select a discussion...</option>
                             <?php
                             if ($discussion_data->num_rows() > 0)
@@ -157,22 +157,14 @@
                             }
                             ?>
                         </select>
-
-                        <select id="sel_threads_forum" name="sel_threads_forum" style="display: none;">
-
-                        </select>
-
+                        <select id="sel_threads_forum" name="sel_threads_forum" style="display: none;"></select>
                         <select id="sel_sticky" name="sel_sticky" >
                             <option value="1">Not a Sticky</option>
                             <option value="2">Sticky</option>
                         </select>
+                        <input type="text" id="inp_thread" name="inp_thread" placeholder="Title">
+                        <textarea type="text" id="ta_thread" name="ta_thread" cols="30" rows="10" placeholder="Message"></textarea>
 
-                        <input type="text" name="inp_thread" placeholder="Thread Name">
-
-                        <textarea name="int_message" id="" cols="30" rows="10" placeholder="Message"></textarea>
-
-                        <a class="a_upload" href="">Select file<input class="inp_upload_file" type="file"></a>
-                        
                         <button id="btn_add_threads" type="submit" class="button small right"><i class="fi-plus small"></i> Add</button>
                     </form>
 

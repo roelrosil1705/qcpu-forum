@@ -3,15 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class main extends CI_Controller {
 
+    public function __construct() {
+        parent::__construct ();
+        $this->load->model('login_model');
+        $this->load->model('insert_model');
+        $this->load->model('get_model');
+    }
+
     public function index()
     {
-        $this->load->view('main_view');
+        $data['content'] = $this->load->view('content_view', NULL, TRUE);
+        $data['navigator'] = $this->load->view('nav', NULL, TRUE);
+        $this->load->view('main_view', $data);
     }
 
     function login(){
         $this->load->model('login_model');
         $this->login_model->checklogin( $this->input->post('inp_username'), $this->input->post('inp_password') );
-        $this->load->view('main_view');
+        $data['navigator'] = $this->load->view('nav', NULL, TRUE);
+        $this->load->view('main_view', $data);
     }
 
     function logout(){
@@ -24,7 +34,26 @@ class main extends CI_Controller {
     }
 
     function thread(){
-        echo $this->input->get('a');
+        $data_table['thread'] = $this->get_model->get_forum_thread( $this->input->get('a') );
+
+        if( !empty($data_table['thread']) ){
+            $data['content'] = $this->load->view('thread_view', $data_table, TRUE);
+            $data['navigator'] = $this->load->view('nav', NULL, TRUE);
+            $this->load->view('main_view', $data);
+        }else{
+            echo 'Failed';
+        }
+    }
+
+    function gtt(){
+        $data_table['thread'] = $this->get_model->get_inner_thread( $this->input->get('b') );
+        if( !empty($data_table['thread']) ){
+            $data['content'] = $this->load->view('thread_inner_view', $data_table, TRUE);
+            $data['navigator'] = $this->load->view('nav', NULL, TRUE);
+            $this->load->view('main_view', $data);
+        }else{
+            echo 'Failed';
+        }
     }
 
 }
