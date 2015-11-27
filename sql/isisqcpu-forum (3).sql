@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2015 at 11:00 AM
+-- Generation Time: Nov 27, 2015 at 07:33 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -95,16 +95,18 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `secondary_education` varchar(50) NOT NULL,
   `year_graduatedsec` varchar(50) DEFAULT NULL,
   `secondary_honors` varchar(50) DEFAULT NULL,
+  `account_status` text NOT NULL,
   `date_registered` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`stud_id`, `account_no`, `account_type`, `password`, `lastname`, `firstname`, `middlename`, `birthdate`, `gender`, `street`, `brgy`, `province`, `phone_number`, `religion`, `mother_name`, `mother_occupation`, `mother_education`, `father_name`, `father_occupation`, `father_education`, `primary_education`, `year_graduated`, `primary_honors`, `secondary_education`, `year_graduatedsec`, `secondary_honors`, `date_registered`) VALUES
-(1, '12-2351', 'student', '638190bf025179ecebcc1b3d019a0230', 'Garma', 'Erwin', 'Bernal', 'Monday, July 05, 1993', 'Male', '615 Int C', 'BagBag', 'Novaliches, Quezon City', '09194958585', 'Catholic', 'Brenda Garma', 'OFW', 'College Graduate', 'Edgar Garma', 'Soldier', 'College Graduate', 'Dingras FaithAcademy, Inc', '2004', 'none', 'DNHS', '2008', 'none', '0000-00-00 00:00:00'),
-(2, '45-6513', 'admin', '7371713832ca5a0bb0e2a6f676869246', 'Roel', 'Rosil', 'Nanar', 'April 5, 1991', 'Male', '2 Martirez St', 'Gulod', 'Novaliches, Quezon CIty', '09464187000', 'Roman Catholic', 'Letty Rosil', 'House Wife', 'Cosmetology', 'Rogelio Rosil', 'OFW', 'Machinery', 'Software Developement', '2014', 'Sumusumakumlaude', 'Hardware Developement', '2014', 'Kumukumlaude', '2015-11-24 22:22:00');
+INSERT INTO `accounts` (`stud_id`, `account_no`, `account_type`, `password`, `lastname`, `firstname`, `middlename`, `birthdate`, `gender`, `street`, `brgy`, `province`, `phone_number`, `religion`, `mother_name`, `mother_occupation`, `mother_education`, `father_name`, `father_occupation`, `father_education`, `primary_education`, `year_graduated`, `primary_honors`, `secondary_education`, `year_graduatedsec`, `secondary_honors`, `account_status`, `date_registered`) VALUES
+(1, '12-2351', 'student', '638190bf025179ecebcc1b3d019a0230', 'Garma', 'Erwin', 'Bernal', 'Monday, July 05, 1993', 'Male', '615 Int C', 'BagBag', 'Novaliches, Quezon City', '09194958585', 'Catholic', 'Brenda Garma', 'OFW', 'College Graduate', 'Edgar Garma', 'Soldier', 'College Graduate', 'Dingras FaithAcademy, Inc', '2004', 'none', 'DNHS', '2008', 'none', 'enrolled', '0000-00-00 00:00:00'),
+(2, '45-6513', 'admin', '7371713832ca5a0bb0e2a6f676869246', 'Roel', 'Rosil', 'Nanar', 'April 5, 1991', 'Male', '2 Martirez St', 'Gulod', 'Novaliches, Quezon CIty', '09464187000', 'Roman Catholic', 'Letty Rosil', 'House Wife', 'Cosmetology', 'Rogelio Rosil', 'OFW', 'Machinery', 'Software Developement', '2014', 'Sumusumakumlaude', 'Hardware Developement', '2014', 'Kumukumlaude', 'hired', '2015-11-24 22:22:00'),
+(3, '06-0513', 'faculty', 'a49d1fa77b5d84356d9502bbed15e933', 'Musa', 'Laiza', 'Manforte', '12-19-1993', 'female', 'Roque St', 'NIA, Quezon City', 'NCR', '09093408707', 'Jehovah''s Witnesses', 'mom name', 'mom occu', 'mom edu', 'dad name', 'dad occu', 'dad edu', 'Bulan Elementary School', '2003', 'Validictorian', 'Sauyo High School', '2009', 'Validictorian', 'pre-enlist', '2015-11-23 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -170,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `forum-contents` (
 
 INSERT INTO `forum-contents` (`content_id`, `discussion_id`, `admin_id`, `content_title`, `last_post`, `threads`, `posts`, `date_created`) VALUES
 (1, 2, '45-6513', 'I declare food bonanza', '', 0, 0, '11-24-2015 15:58:41'),
-(2, 1, '45-6513', 'Gallery', '11-26-2015  08:43:40 by Rosil Roel', 13, 0, '11-24-2015 16:00:49'),
+(2, 1, '45-6513', 'Gallery', '11-26-2015  08:43:40 by Rosil Roel', 13, 13, '11-24-2015 16:00:49'),
 (3, 3, '45-6513', 'Like this page', '', 0, 0, '11-24-2015 16:01:03');
 
 -- --------------------------------------------------------
@@ -208,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `forum-replies` (
   `account_no` text NOT NULL,
   `message` text NOT NULL,
   `date_created` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `forum-replies`
@@ -225,7 +227,10 @@ INSERT INTO `forum-replies` (`reply_id`, `thread_id`, `account_no`, `message`, `
 (8, 13, '12-2351', 'dfgfdgfdg', '11-26-2015 10:46:53'),
 (9, 13, '12-2351', 'hfghgfh', '11-26-2015 10:47:13'),
 (10, 13, '12-2351', 'khjk', '11-26-2015 10:48:20'),
-(11, 13, '12-2351', 'fghfghf', '11-26-2015 10:49:42');
+(11, 13, '12-2351', 'fghfghf', '11-26-2015 10:49:42'),
+(12, 13, '12-2351', 'asdasd', '11-27-2015 02:41:03'),
+(13, 13, '12-2351', 'ghdgfdgfd', '11-27-2015 07:17:34'),
+(14, 13, '12-2351', 'Gwapo ako', '11-27-2015 07:17:40');
 
 -- --------------------------------------------------------
 
@@ -255,16 +260,16 @@ INSERT INTO `forum-threads` (`thread_id`, `content_id`, `stud_id`, `admin_id`, `
 (1, 2, '0', '45-6513', 1, 'Sala Set', 'message', '11-24-2015  16:01:46 by Rosil Roel', 1, 0, '11-24-2015 16:01:46'),
 (2, 2, '0', '45-6513', 1, 'Class', '1234', '11-25-2015  09:09:49 by Rosil Roel', 1, 0, '11-25-2015 09:09:49'),
 (3, 2, '0', '45-6513', 1, 'sadsfdsf', 'sdfdsfsf', '11-26-2015  08:00:18 by Rosil Roel', 1, 0, '11-26-2015 08:00:18'),
-(4, 2, '0', '45-6513', 1, 'hfgh', 'fgh', '11-26-2015  08:01:24 by Rosil Roel', 1, 0, '11-26-2015 08:01:24'),
+(4, 2, '0', '45-6513', 1, 'hfgh', 'fgh', '11-26-2015  08:01:24 by Rosil Roel', 6, 0, '11-26-2015 08:01:24'),
 (5, 2, '0', '45-6513', 1, 'frasd', 'xcvcv', '11-26-2015  08:02:10 by Rosil Roel', 1, 0, '11-26-2015 08:02:10'),
 (6, 2, '0', '45-6513', 1, 'Ayun', 'Tugtog', '11-26-2015  08:23:59 by Rosil Roel', 1, 0, '11-26-2015 08:23:59'),
 (7, 2, '0', '45-6513', 1, 'Ayun', 'Tugtog', '11-26-2015  08:23:59 by Rosil Roel', 1, 0, '11-26-2015 08:23:59'),
-(8, 2, '0', '45-6513', 1, 'asdadfgh', 'ghjhgjh', '11-26-2015  08:25:58 by Rosil Roel', 1, 0, '11-26-2015 08:25:58'),
+(8, 2, '0', '45-6513', 1, 'asdadfgh', 'ghjhgjh', '11-26-2015  08:25:58 by Rosil Roel', 2, 0, '11-26-2015 08:25:58'),
 (9, 2, '0', '45-6513', 1, 'gffg', 'hgjhh', '11-26-2015  08:34:40 by Rosil Roel', 1, 0, '11-26-2015 08:34:40'),
 (10, 2, '0', '45-6513', 1, 'hgfhhmbnm', 'nbmbnmbnmbnm', '11-26-2015  08:35:28 by Rosil Roel', 2, 0, '11-26-2015 08:35:28'),
 (11, 2, '0', '45-6513', 1, 'hgfhhmbnm', 'nbmbnmbnmbnm', '11-26-2015  08:35:28 by Rosil Roel', 2, 0, '11-26-2015 08:35:28'),
 (12, 2, '0', '45-6513', 1, 'vbnbvn', 'fghgfhf', '11-26-2015  08:36:00 by Rosil Roel', 7, 0, '11-26-2015 08:36:00'),
-(13, 2, '0', '45-6513', 1, 'fghfghfghfghfgh', 'bnmbnmbmbnbmb', '11-26-2015  08:43:40 by Rosil Roel', 65, 10, '11-26-2015 08:43:40');
+(13, 2, '0', '45-6513', 1, 'fghfghfghfghfgh', 'bnmbnmbmbnbmb', '11-26-2015  08:43:40 by Rosil Roel', 80, 13, '11-26-2015 08:43:40');
 
 -- --------------------------------------------------------
 
@@ -472,7 +477,7 @@ ALTER TABLE `accounting`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `stud_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `stud_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `announcement`
 --
@@ -497,7 +502,7 @@ ALTER TABLE `forum-discussion`
 -- AUTO_INCREMENT for table `forum-replies`
 --
 ALTER TABLE `forum-replies`
-  MODIFY `reply_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `reply_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `forum-threads`
 --
