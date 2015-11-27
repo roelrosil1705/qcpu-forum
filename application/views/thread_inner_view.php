@@ -8,21 +8,30 @@
         echo '<div class="row">'.$thread_arr->mes.'</div>';
     ?>
 </div>
-<div class="row">
-    <div class="column large-12 medium-10 small-8">
-        <form id="reply_form" method="post" action="">
 
-            <div id="reply_alert" data-alert class="alert-box alert radius hide-normal">
-                Please fill the textarea.
-                <a href="#" class="close">&times;</a>
+<?php
+    if( $this->session->userdata('status') == 1 ){
+        echo '
+            <div class="row">
+                <div class="column large-12 medium-10 small-8">
+
+                    <form id="reply_form" method="post" action="">
+
+                        <div id="reply_alert" data-alert class="alert-box alert radius hide-normal">
+                            Please fill the textarea.
+                            <a href="#" class="close">&times;</a>
+                        </div>
+
+                        <input type="hidden" name="thd" value="' . $thread_arr->tid . '">
+                        <textarea name="ta_reply" id="ta_reply" cols="30" rows="5"></textarea>
+                        <button id="btn_reply" class="right button small" >Reply</button>
+                    </form>
+                </div>
             </div>
+        ';
+    }
+?>
 
-            <input type="hidden" name="thd" value="<?=$thread_arr->tid?>">
-            <textarea name="ta_reply" id="ta_reply" cols="30" rows="5"></textarea>
-            <button id="btn_reply" class="right button small" >Reply</button>
-        </form>
-    </div>
-</div>
 <h4>Replies</h4>
 
 

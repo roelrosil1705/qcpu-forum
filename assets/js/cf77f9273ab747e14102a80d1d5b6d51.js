@@ -150,7 +150,7 @@ $('#reply_form').ajaxForm({
         var rep1 = response.replace("[","");
         var rep2 = rep1.replace("]","");
         var json = $.parseJSON(rep2);
-        console.log(json)
+        //console.log(json)
         $('#ta_reply').val('');
 
         $("<tr><td>" + json.fn + "</td><td>"+ json.mes +"</td><td>" + json.dc + "</td></tr>").prependTo("#table-replies > tbody"); //update replies
@@ -185,3 +185,46 @@ function reload_thread_selector(){
 }
 
 reload_thread_selector();
+
+$('.btn_account').on('click', function(){
+    var mid = $(this).attr('value');
+    $.ajax({
+        url: MyNameSpace.config.base_url+'admin/for_edit_account_type',
+        type:'post',
+        data: {
+            id : mid
+        },
+        success: function(data) {
+            console.log(mid);
+            var json = $.parseJSON(data);
+            $('#account_alias').text(json.fullname);
+            $('#account_type').text(json.account_type);
+            $('#hid_id').val( mid );
+            $('#change-role-modal').foundation('reveal', 'open');
+        }
+    });
+});
+
+$('#account_list').on('change', function(){
+    console.log($('#account_list').val());
+    console.log($('#hid_id').val());
+    $.ajax({
+        url: MyNameSpace.config.base_url+'admin/update_account',
+        type:'post',
+        data: {
+            al : $('#account_list').val(),
+            hd : $('#hid_id').val()
+        },
+        success: function(data) {
+            console.log(data);
+
+            if( data == 'Update Success' ){
+                $('#alert-success').show();
+                $('#alert-fail').hide();
+            }else{
+                $('#alert-success').hide();
+                $('#alert-fail').show();
+            }
+        }
+    });
+});

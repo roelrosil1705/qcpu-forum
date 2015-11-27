@@ -13,7 +13,7 @@
 </div>
 
 <?php
-    if( $this->session->userdata('account_no') ){
+    if( $this->session->userdata('status') == 1 && $this->session->userdata('account_type') != 'student' ){
         echo '
             <a class="button right" data-reveal-id="threadModal" ><i class="fi-plus small"></i>Add Thread</a>
 
@@ -52,7 +52,6 @@
 
     <?php
         foreach( json_decode($thread) as $row ){
-//            $query = $this->db->get_where('forum-replies', array( 'thread_id' => $row->thread ));
             echo '
                 <tr>
                     <td><a href="'.base_url('main/gtt?b=').$row->thread_id.'">'.$row->thread.'</a></td>

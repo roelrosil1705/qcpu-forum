@@ -122,6 +122,8 @@ class insert_model extends CI_Model {
 
     function insert_replies($a){
         $rep = 0;
+        $content_id = 0;
+        $tot = 0;
         $insid = 0;
 
         $data = array(
@@ -141,7 +143,7 @@ class insert_model extends CI_Model {
             $row = $query->row();
             if (isset($row))
             {
-                $row->content_id;
+                $content_id = $row->content_id;
                 $rep = $row->no_of_replies + 1;
             }
 
@@ -151,9 +153,35 @@ class insert_model extends CI_Model {
             $this->db->where( 'thread_id', $a['thd'] );
             $this->db->update( 'forum-threads', $data_update );
 
+            $this->db->select_sum('no_of_replies');
+            $query = $this->db->get_where('forum-threads', array( 'content_id' => $content_id ));
+            $row = $query->row();
+            if (isset($row))
+            {
+                $tot = $row->no_of_replies;
+            }
+
+            $data_update = array(
+                'posts'   => $tot
+            );
+            $this->db->where( 'content_id', $content_id );
+            $this->db->update( 'forum-contents', $data_update );
         }
 
         return $insid;
     }
 
+    function update_account( $arr ){
+        $data_update = array(
+            'account_type'   => $arr['al']
+        );
+        $this->db->where( 'account_no', $arr['hd'] );
+        $this->db->update( 'accounts', $data_update );
+
+        if( $this->db->affected_rows() > 0 ){
+            echo 'Update Success';
+        }else{
+            echo 'Update Fail';
+        }
+    }
 }

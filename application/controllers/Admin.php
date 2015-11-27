@@ -100,4 +100,21 @@ class Admin extends CI_Controller {
         }
 
     }
+
+    function roles(){
+        $data['student_list'] = $this->get_model->load_account( 'student' );
+        $data['admin_list'] = $this->get_model->load_account( 'admin' );
+        $data['faculty_list'] = $this->get_model->load_account( 'faculty' );
+        $data['navigator'] = $this->load->view('admin/nav', NULL, TRUE);
+        $data['dashboard'] = $this->load->view('admin/role_view', $data, TRUE);
+        $this->load->view ('admin/admin_view', $data);
+    }
+
+    function for_edit_account_type(){
+        echo $this->get_model->get_account_by_id( $this->input->post('id') );
+    }
+
+    function update_account(){
+        echo $this->insert_model->update_account( $this->input->post() );
+    }
 }

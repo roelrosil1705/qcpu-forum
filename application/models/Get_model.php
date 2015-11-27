@@ -113,4 +113,21 @@ class get_model extends CI_Model {
         return json_encode( $reply_arr );
     }
 
+    function load_account( $role ){
+        return $query = $this->db->get_where( 'accounts', array( 'account_type' => $role ) );
+    }
+
+    function get_account_by_id( $aid ){
+        $fullname = '';
+        $req_arr = array();
+
+        $query = $this->db->get_where( 'accounts', array( 'account_no' => $aid ) );
+        foreach ($query->result() as $row)
+        {
+            $req_arr['fullname'] = $row->lastname . ', ' . $row->firstname . ' ' . $row->middlename;
+            $req_arr['account_type'] = $row->account_type;
+        }
+
+        return json_encode( $req_arr );
+    }
 }

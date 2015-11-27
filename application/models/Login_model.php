@@ -94,8 +94,4 @@ class login_model extends CI_Model {
     function load_contents(){
         return $this->db->get('forum-contents');
     }
-
-    function fetch_(){
-
-    }
 }

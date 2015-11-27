@@ -8,8 +8,8 @@
 <aside class="left-off-canvas-menu">
     <ul class="off-canvas-list">
         <li><label>QCPU Forum</label></li>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Roles</a></li>
+        <li><a href="<?=base_url('admin')?>">Dashboard</a></li>
+        <li><a href="<?=base_url('admin/roles')?>">Roles</a></li>
         <li><a href="<?=base_url('admin/logout');?>">Log Out</a></li>
 
         <!--    For dropdown    -->
