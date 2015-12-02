@@ -206,8 +206,6 @@ $('.btn_account').on('click', function(){
 });
 
 $('#account_list').on('change', function(){
-    console.log($('#account_list').val());
-    console.log($('#hid_id').val());
     $.ajax({
         url: MyNameSpace.config.base_url+'admin/update_account',
         type:'post',
